@@ -1,4 +1,4 @@
-baseURL = "http://likakuli.github.io"
+baseURL = "http://likakuli.com"
 languageCode = "zh-cn"
 defaultContentLanguage = "zh-cn"                             # en / zh-cn / ... (This field determines which i18n file to use)
 title = "Kaku Li - 李鹤的博客"
