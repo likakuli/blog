@@ -215,4 +215,9 @@ func (r *Reflector) ListAndWatch(stopCh <-chan struct{}) error {
 
 发现了问题所在，回过头来再看下上述两段代码，watchHandler里定义了对接收到的数据的处理逻辑，在一个for循环中进行，ListAndWatch的Watch和watchHandler的调用也在for循环中调用，只有在watchHandler返回，并且返回的err是nil的情况下才会继续watch，才有可能触发这个bug，只要watchHandler不退出或退出且返回err不为空，即使中间出现过resourceVersion被错误赋值的情况也不会导致bug的出现，这也就解释了我的疑问，为什么这个bug影响这么严重，现在才被注意到，因为这个bug不会经常出现。在我们用到的1.6.7的集群中执行kubectl get ep --all-namespaces得到的结果中除了确实是刚创建的svc外的endpoint外，其余endpoint的存活时间都已有几十到几百天，也就是在相当长一段时间内并没有出现这个bug，虽然出现的话影响很严重。知乎的评论中有人说按照复现方式进行操作但是没有出现这个bug也是这个道理。
 
-综上，个人认为这个bug影响确实严重，但是不会经常出现，像bug的发现者说的那样频繁出现的情况，个人认为还需要继续排查下为什么watchHander的调用会频繁的正常退出，可能这才是问题真正所在。
+综上，bug复现需要满足两点：
+
+1. watchHandler正常退出，对于1.9.2版本来说就是event, ok := <-w.ResultChan()，ok为false，也就是channel被关闭或者返回为空。
+2. 退出接收到的最后一个Event的type为delete，而且是之前创建的，也就是resourceVersion是旧的。
+
+个人认为这个bug影响确实严重，但是不会经常出现，像bug的发现者说的那样频繁出现的情况，个人认为还需要继续排查下为什么watchHander的调用会频繁的正常退出，可能这才是问题真正所在。
