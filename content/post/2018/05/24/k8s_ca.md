@@ -6,14 +6,10 @@ draft: false
 keywords: ["kubernetes","CA","k8s"]
 description: "kubernetes deploy with CA"
 tags: ["kubernetes","devops"]
-categories: ["kuberentes","devops"]
+categories: ["kubernetes","devops"]
 author: "Kaku Li"
 
 ---
-
-# Kubernetes CA
-
-
 
 ## 简介
 
@@ -29,9 +25,9 @@ author: "Kaku Li"
 
 - 10.202.43.132	master & etcd
 
-- 10.202.43 133	master & node & etcd
+	 10.202.43 133	master & node & etcd
 
-- 10.202.43.134	node & etcd
+	 10.202.43.134	node & etcd
 
 
 
