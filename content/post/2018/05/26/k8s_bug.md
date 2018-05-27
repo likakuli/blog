@@ -218,6 +218,6 @@ func (r *Reflector) ListAndWatch(stopCh <-chan struct{}) error {
 综上，bug复现需要满足两点：
 
 1. watchHandler正常退出，对于1.9.2版本来说就是event, ok := <-w.ResultChan()，ok为false，也就是channel被关闭或者返回为空。
-2. 退出接收到的最后一个Event的type为delete，而且是之前创建的，也就是resourceVersion是旧的。
+2. 退出前接收到的最后一个Event的type为delete，而且是之前创建的，也就是resourceVersion是旧的。
 
-个人认为这个bug影响确实严重，但是不会经常出现，像bug的发现者说的那样频繁出现的情况，个人认为还需要继续排查下为什么watchHander的调用会频繁的正常退出，可能这才是问题真正所在。
+这个bug影响确实严重，但是不会经常出现，像bug的发现者说的那样频繁出现的情况，可能还需要继续排查下为什么watchHander的调用会频繁的正常退出，可能这才是问题真正所在。
