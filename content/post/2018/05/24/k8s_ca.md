@@ -607,7 +607,7 @@ systemctl status etcd
 
 ```shell
 
-ETCDCTL_API=3 etcdctl --endpoints=https://10.202.43.132:2379,https://10.202.43.133:2379,https://10.202.43.134:2379\
+etcdctl --endpoints=https://10.202.43.132:2379,https://10.202.43.133:2379,https://10.202.43.134:2379\
 
         --cert-file=/etc/kubernetes/ssl/etcd.pem \
 
