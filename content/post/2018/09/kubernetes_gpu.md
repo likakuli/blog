@@ -10,56 +10,54 @@ categories: ["kubernetes"]
 author: "Kaku Li"
 ---
 
-1. k8s 1.10之前需要在kube-apiserver、kube-controller-manager、kube-scheduler、kubelet中开启如下feature：
+## kubernetes设置
 
-   --feature-gates="DevicePlugins=true"
+1. k8s 1.10之前需要在kube-apiserver、kube-controller-manager、kube-scheduler、kubelet中开启如下feature，如果不是首次部署的话，重启以上所有组件：
 
-   如果不是首次部署的话，重启以上所有组件
+     --feature-gates="DevicePlugins=true"
 
 2. 安装 NVIDIA Driver~=361.93
 
-   目前的云主机已安装driver
-
 3. 安装nvidia-docker2，由于目前使用的docker版本提示信息里包含自定义字样，只能使用如下方式安装：
 
-   > 所有安装方式参考[这里](https://github.com/NVIDIA/nvidia-docker)
+     所有安装方式参考[这里](https://github.com/NVIDIA/nvidia-docker)
 
-   ```shell
+     ```
    # If you have nvidia-docker 1.0 installed: we need to remove it and all existing GPU containers
-   docker volume ls -q -f driver=nvidia-docker | xargs -r -I{} -n1 docker ps -q -a -f volume={} | xargs -r docker rm -f
-   sudo yum remove nvidia-docker
-   
-   # Add the package repositories
-   distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-   curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.repo | \
-     sudo tee /etc/yum.repos.d/nvidia-container-runtime.repo
-   
-   # Install the nvidia runtime hook
-   sudo yum install -y nvidia-container-runtime-hook
-   sudo mkdir -p /usr/libexec/oci/hooks.d
-   echo -e '#!/bin/sh\nPATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" exec nvidia-container-runtime-hook "$@"' | \
-     sudo tee /usr/libexec/oci/hooks.d/nvidia
-   sudo chmod +x /usr/libexec/oci/hooks.d/nvidia
-   
-   # Test nvidia-smi with the latest official CUDA image
-   # You can't use `--runtime=nvidia` with this setup.
-   docker run --rm nvidia/cuda nvidia-smi
-   ```
+      docker volume ls -q -f driver=nvidia-docker | xargs -r -I{} -n1 docker ps -q -a -f volume={} | xargs -r docker rm -f
+      sudo yum remove nvidia-docker
+      
+      # Add the package repositories
+      distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+      curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.repo | \
+        sudo tee /etc/yum.repos.d/nvidia-container-runtime.repo
+      
+      # Install the nvidia runtime hook
+      sudo yum install -y nvidia-container-runtime-hook
+      sudo mkdir -p /usr/libexec/oci/hooks.d
+      echo -e '#!/bin/sh\nPATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" exec nvidia-container-runtime-hook "$@"' | \
+        sudo tee /usr/libexec/oci/hooks.d/nvidia
+      sudo chmod +x /usr/libexec/oci/hooks.d/nvidia
+      
+      # Test nvidia-smi with the latest official CUDA image
+      # You can't use `--runtime=nvidia` with this setup.
+      docker run --rm nvidia/cuda nvidia-smi
+     ```
 
 4. 安装nvidia-container-runtime，在上一步中已经安装了对应的yum repo，这里直接执行如下命令即可：
 
-   > 因为使用了上一步的安装方式，所以需要进行这一步的安装，如果是通过yum直接安装的nvidia-docker2，则不需要进行此步。
+     > 因为使用了上一步的安装方式，所以需要进行这一步的安装，如果是通过yum直接安装的nvidia-docker2，则不需要进行此步。
 
-   ```shell
+    ```shell
    # install runtime
    yum install nvidia-container-runtime
-   ```
+    ```
 
 5. update docker daemon，在docker daemon中添加如下配置
 
-   > daemon.json中添加如下配置，可选配置为"default-runtime": "nvidia"，如果不设置默认runtime，则默认使用runc，启动容器是需要指定--runtime=nvidia
+     > daemon.json中添加如下配置，可选配置为"default-runtime": "nvidia"，如果不设置默认runtime，则默认使用runc，启动容器是需要指定--runtime=nvidia
 
-   ```shell
+     ```shell
    "default-runtime": "nvidia"，
    "runtimes": {
            "nvidia": {
@@ -67,21 +65,20 @@ author: "Kaku Li"
                "runtimeArgs": []
            }
        }
-   ```
+     ```
 
 6. 安装NVIDIA device plugin，插件以daemonset方式部署，如果集群中既有CPU也有GPU节点，可以通过label筛选出GPU节点，无GPU的节点无需部署此程序
 
-   ```shell
+     ```shell
    # For Kubernetes v1.8
    kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v1.8/nvidia-device-plugin.yml
-   
    # For Kubernetes v1.9
    kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v1.9/nvidia-device-plugin.yml
-   ```
+     ```
 
-7. 测试
+## 测试
 
-   ```
+   ```shell
    apiVersion: v1
    kind: Pod
    metadata:
@@ -97,6 +94,8 @@ author: "Kaku Li"
              nvidia.com/gpu: 1
      nodeSelector:
        GPU: "true" //测试时自己给对应GPU节点加了GPU=true的label
+       
+   kubectl create -f test.yaml
    ```
 
    执行结果：
