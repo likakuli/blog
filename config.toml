@@ -7,6 +7,12 @@ enableEmoji = true
 theme = "even"
 
 preserveTaxonomyNames = true
+
+pygmentsOptions = "linenos=table"
+pygmentsCodefences = true
+pygmentsUseClasses = true
+pygmentsCodefencesGuessSyntax = true
+
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
 paginate = 5                                              # 首页每页显示的文章数
 disqusShortname = ""      # disqus_shortname
@@ -43,7 +49,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   url = "/categories/"
 
 [params]
-  version = "3.x"           # Used to give a friendly message when you have an incompatible update
+  version = "4.x"           # Used to give a friendly message when you have an incompatible update
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
 
   since = "2018"            # Site creation time          # 站点建立时间
