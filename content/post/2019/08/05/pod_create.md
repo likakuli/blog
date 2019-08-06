@@ -3,10 +3,10 @@ title: "Pod创建流程"
 date: 2019-08-06T20:41:24+08:00
 lastmod: 2019-08-06T20:41:24+08:00
 draft: false
-keywords: ["kubelet", "kubernetes"]
+keywords: ["kubelet", "kubernetes", "Pod Create"]
 description: "kubelet pod创建主流程"
-tags: ["Pod创建"]
-categories: ["kubelet", "源码分析"]
+tags: ["kubelet"]
+categories: ["源码分析"]
 author: "Kaku Li"
 ---
 

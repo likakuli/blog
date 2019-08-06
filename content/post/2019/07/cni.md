@@ -5,8 +5,8 @@ lastmod: 2019-07-16T13:53:02+08:00
 draft: false
 keywords: ["CNI","kubelet"]
 description: "kubelet与cni交互流程"
-tags: ["network","cni"]
-categories: ["cni"]
+tags: ["network","cni", "kubelet"]
+categories: ["源码分析"]
 author: "Kaku Li"
 ---
 
