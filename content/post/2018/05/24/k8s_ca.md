@@ -6,7 +6,7 @@ draft: false
 keywords: ["kubernetes","CA","k8s"]
 description: "kubernetes deploy with CA"
 tags: ["kubernetes","devops"]
-categories: ["kubernetes","devops"]
+categories: ["使用说明"]
 author: "Kaku Li"
 
 ---

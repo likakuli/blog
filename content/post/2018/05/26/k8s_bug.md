@@ -6,7 +6,7 @@ draft: false
 keywords: ["kubernetes", "bug"]
 description: "kubernetes's bug because of the resourceversion"
 tags: ["kubernetes"]
-categories: ["kubernetes"]
+categories: ["问题排查"]
 author: "Kaku Li"
 ---
 

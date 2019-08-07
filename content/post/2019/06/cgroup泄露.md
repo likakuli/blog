@@ -6,7 +6,7 @@ draft: false
 keywords: ["cgorup leak"]
 description: "cgroup泄露"
 tags: ["cgroup"]
-categories: ["cgroup"]
+categories: ["问题排查"]
 author: "Kaku Li"
 
 ---

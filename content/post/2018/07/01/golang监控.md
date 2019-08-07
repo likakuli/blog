@@ -6,7 +6,7 @@ draft: false
 keywords: ["golang", "pprof", "prometheus"]
 description: "golang监控"
 tags: ["golang","pprof","prometheus"]
-categories: ["golang","pprof","prometheus"]
+categories: ["使用说明"]
 author: "Kaku Li"
 ---
 

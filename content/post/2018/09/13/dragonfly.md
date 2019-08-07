@@ -6,7 +6,7 @@ draft: false
 keywords: ["docker","harbor","dragonfly","蜻蜓","p2p"]
 description: "docker image p2p"
 tags: ["docker","dragonfly"]
-categories: ["docker","harbor","dragonfly","蜻蜓","p2p"]
+categories: ["使用说明"]
 author: "Kaku Li"
 ---
 

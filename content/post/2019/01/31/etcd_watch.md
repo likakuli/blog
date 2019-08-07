@@ -6,7 +6,7 @@ draft: false
 keywords: ["etcd","watch"]
 description: "etcd watch内存泄露"
 tags: ["etcd"]
-categories: ["etcd"]
+categories: ["问题排查"]
 author: "Kaku Li"
 ---
 

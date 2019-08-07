@@ -6,7 +6,7 @@ draft: false
 keywords: ["prometheus", "alertmanager", "kubernetes"]
 description: ""
 tags: ["prometheus", "monitor", "altermanager"]
-categories: ["prometheus", "alertmanager", "kubernetes"]
+categories: ["使用说明"]
 author: "Kaku Li"
 ---
 

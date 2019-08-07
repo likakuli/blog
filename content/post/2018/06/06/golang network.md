@@ -6,7 +6,7 @@ draft: false
 keywords: ["golang", "netpoll", "io"]
 description: ""
 tags: ["golang", "netpoll", "io"]
-categories: ["netpoll", "golang", "io"]
+categories: ["使用说明"]
 author: "Kaku Li"
 ---
 

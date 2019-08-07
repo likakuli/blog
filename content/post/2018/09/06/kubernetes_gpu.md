@@ -6,7 +6,7 @@ draft: false
 keywords: ["kubernetes","GPU","Custom"]
 description: "kubernetes启用GPU"
 tags: ["kubernetes"]
-categories: ["kubernetes"]
+categories: ["使用说明"]
 author: "Kaku Li"
 ---
 
@@ -42,7 +42,7 @@ author: "Kaku Li"
       # Test nvidia-smi with the latest official CUDA image
       # You can't use `--runtime=nvidia` with this setup.
       docker run --rm nvidia/cuda nvidia-smi
-     ```
+   ```
 
 4. 安装nvidia-container-runtime，在上一步中已经安装了对应的yum repo，这里直接执行如下命令即可：
 
@@ -51,7 +51,7 @@ author: "Kaku Li"
     ```shell
    # install runtime
    yum install nvidia-container-runtime
-    ```
+   ```
 
 5. update docker daemon，在docker daemon中添加如下配置
 
@@ -65,7 +65,7 @@ author: "Kaku Li"
                "runtimeArgs": []
            }
        }
-     ```
+   ```
 
 6. 安装NVIDIA device plugin，插件以daemonset方式部署，如果集群中既有CPU也有GPU节点，可以通过label筛选出GPU节点，无GPU的节点无需部署此程序
 
@@ -74,7 +74,7 @@ author: "Kaku Li"
    kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v1.8/nvidia-device-plugin.yml
    # For Kubernetes v1.9
    kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v1.9/nvidia-device-plugin.yml
-     ```
+   ```
 
 ## 测试
 

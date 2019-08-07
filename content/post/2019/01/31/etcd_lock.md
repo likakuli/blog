@@ -6,7 +6,7 @@ draft: false
 keywords: ["etcd","lock"]
 description: "etcd分布式锁加锁失败"
 tags: ["etcd"]
-categories: ["etcd"]
+categories: ["问题排查"]
 author: "Kaku Li"
 ---
 

@@ -6,7 +6,7 @@ draft: false
 keywords: ["docker","内存泄露","memory leak"]
 description: "dockerd内存泄露"
 tags: ["docker"]
-categories: ["docker"]
+categories: ["问题排查"]
 author: "Kaku Li"
 ---
 
