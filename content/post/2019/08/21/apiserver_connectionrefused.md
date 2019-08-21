@@ -243,4 +243,4 @@ func (r *Reflector) ListAndWatch(stopCh <-chan struct{}) error {
 
 ### 总结
 
-至此，已经清楚了具体的原因，ListAndWatch的修改很简单，已经给官方提了[pull request](https://github.com/kubernetes/kubernetes/pull/81634)修复这个问题。至于HandleDelta处的处理是否有问题待讨论，我可以理解为什么现在的逻辑没有对比old与new就直接分发update事件，因为informer本身也有定时同步的机制，会从本地的缓存中同步全量数据到deltafifo中，主要用来处理接收到事件后需要与第三方交互的问题，如果完全是k8s的操作，那么完全可以禁止全量同步（resyncPeriod设置为0），这里说来话长了，可以参考我之前提的一个i[ssue](https://github.com/kubernetes/kubernetes/issues/75495)。如果这里加上了是否相等的判断，那么定时同步的机制就会失效。修复此问题的方式应该是给informer的config再加一个属性标识是否需要去重，默认为true，因为大部分情况是需要去重的，然后在HandleDelta时根据此属性决定是否去重。但是这就有可能会导致已有的部分客户端代码无法正常运行，因为进行了去重，导致接收不到期望的全量同步的事件。这里也提了一个[issue](https://github.com/kubernetes/kubernetes/issues/81638)来跟进。
+至此，已经清楚了具体的原因，ListAndWatch的修改很简单，已经给官方提了[pull request](https://github.com/kubernetes/kubernetes/pull/81634)修复这个问题。
