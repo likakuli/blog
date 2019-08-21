@@ -12,7 +12,7 @@ author: "Kaku Li"
 
 List-Watch是kubernetes的核心机制。组件kubelet、kube-controller-manager、kube-scheduler需要监控各种资源(pod、service等)的变化，当这些对象发生变化时(add、delete、update)，kube-apiserver会主动通知这些组件。这个过程类似一个发布-订阅系统。本文章将从代码角度探究一下list-watch的实现方式。
 
-> 转载自https://zhuanlan.zhihu.com/p/33335726
+> 转载自https://zhuanlan.zhihu.com/p/33335726，有修改
 
 ## **第一部分：**kube-apiserver对etcd的List-watch机制
 
@@ -34,8 +34,7 @@ List-Watch是kubernetes的核心机制。组件kubelet、kube-controller-manager
 
 **StorageWithCacher**
 
-1. 调用NewRawStorage，它将构建etcdHelper，etcdHelper实现Storage.Interface接口，封装了对etcd的操作；
-2. 调用NewCacherFromConfig，将创建Cacher对象；
+1. 调用NewCacherFromConfig，将创建Cacher对象；
 
 ![img](https://pic4.zhimg.com/80/v2-692a1b630fe492fe9bd51ec951ab08d7_hd.jpg)
 
