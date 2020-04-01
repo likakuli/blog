@@ -6,7 +6,7 @@ draft: false
 keywords: ["adopt", "controller revision"]
 description: "orphan controller revision cannot be adopt"
 tags: ["kuberntes","controllerrevision"]
-categories: ["bug修复"]
+categories: ["bug修复","问题排查","性能优化"]
 author: "Kaku Li"
 ---
 

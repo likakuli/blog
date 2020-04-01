@@ -6,7 +6,7 @@ draft: false
 keywords: ["statefulset","kubernetes"]
 description: "create pod slowly"
 tags: ["kubernetes","statefulset"]
-categories: ["问题排查"]
+categories: ["问题排查","性能优化"]
 author: "Kaku Li"
 ---
 
