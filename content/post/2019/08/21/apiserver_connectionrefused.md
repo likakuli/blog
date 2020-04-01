@@ -6,7 +6,7 @@ draft: false
 keywords: ["kube-apiserver", "watch"]
 description: ""
 tags: ["kube-apiserver"]
-categories: ["问题排查"]
+categories: ["问题排查","bug修复"]
 author: "Kaku Li"
 ---
 
