@@ -1,5 +1,5 @@
 ---
-title: "通过header访问指定版本"
+title: "Knative通过header访问指定版本"
 date: 2020-08-19T17:26:47+08:00
 lastmod: 2020-08-19T17:26:47+08:00
 draft: false
