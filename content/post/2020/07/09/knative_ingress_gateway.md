@@ -5,14 +5,16 @@ lastmod: 2020-07-09T21:00:07+08:00
 draft: false
 keywords: ["knative", "domain"]
 description: "通过外部域名访问knative集群内的服务"
-tags: ["knative",]
-categories: ["问题排查"]
+tags: ["knative"]
+categories: ["定制开发"]
 author: "Kaku Li"
 ---
 
 ### 背景
 
 > knative 0.14.0
+>
+> 实际修改可能与贴出来的代码不符，贴出来的代码只是为了方便快速实现功能
 
 最近在搭建公司级的serverless平台，需要用到域名来访问内部服务，采取的是通过PATH来区分不同的服务
 
@@ -121,44 +123,41 @@ func (vs *IstioVirtualService) SetDefaults(ctx context.Context) {
 }
 ```
 
-可以看到整体修改很少，修改完之后重新编译，制作镜像，修改线上Pod的Image，触发原地重启，然后删除掉原有的vs，新的vs自动生成，查看新的vs，wtf？ 居然和之前一样，没有实现我们的效果，查kube-apiserver日志没有看到在创建vs时调用webhook，查看webhook的日志，也没有发现调用，但是在创建deployment时却会调用，然后查看webhook的配置，发现资源里也已经加上了，查了好久还是没有找到原因，不知道是哪个姿势不对了。由于时间关系暂时换另一种方式实现，即直接在创建vs的地方修改，如下
+可以看到整体修改很少，修改完之后重新编译，制作镜像，修改线上Pod的Image，触发原地重启，然后删除掉原有的vs，新的vs自动生成，查看新的vs，wtf？ 居然和之前一样，没有实现我们的效果，查kube-apiserver日志没有看到在创建vs时调用webhook，查看webhook的日志，也没有发现调用，但是在创建deployment时却会调用，然后查看webhook的配置，发现资源里也已经加上了，查了好久还是没有找到原因，不知道是哪个姿势不对了，由于时间关系暂时换另一种方式实现。
+
+因为vs是由king创建的，所以在创建king的地方修改，这样在king创建vs的时候会自动带上我们自定义的domains，如下
 
 ```go
-// 往spec.hosts中添加自定义域名，通过annotation的方式，把需要添加到hosts中的域名放到annotation中
-func makeVirtualServiceSpec(ing *v1alpha1.Ingress, gateways map[v1alpha1.IngressVisibility]sets.String, hosts sets.String) *istiov1alpha3.VirtualService {
-	// add custom domains for didi serverless platform
-	customHostStr := ing.Annotations["serverless.didichuxing.com/domains"]
+// 通过annotation的方式，把需要添加到hosts中的域名放到annotation中
+// MakeIngressSpec creates a new IngressSpec
+func MakeIngressSpec(
+	ctx context.Context,
+	r *servingv1.Route,
+	tls []v1alpha1.IngressTLS,
+	targets map[string]traffic.RevisionTargets,
+	visibility map[string]netv1alpha1.IngressVisibility,
+	acmeChallenges ...v1alpha1.HTTP01Challenge,
+) (v1alpha1.IngressSpec, error) {
+	...
+
+	// add custom external domains
+	customHostStr := r.Annotations["serverless.didichuxing.com/domains"]
+	sort.Sort(sort.Reverse(sort.StringSlice(names)))
 	if len(customHostStr) > 0 {
 		customHosts := strings.Split(customHostStr, ";")
-		for _, host := range customHosts {
-			hosts[host] = struct{}{}
+		for _, name := range names {
+			if name != "default" {
+				visibility := netv1alpha1.IngressVisibilityExternalIP
+				rule := *makeIngressRule(customHosts, r.Namespace, visibility, name, targets[name])
+				// If this is a public rule, we need to configure ACME challenge paths.
+				rule.HTTP.Paths = append(
+					makeACMEIngressPaths(challengeHosts, customHosts), rule.HTTP.Paths...)
+				rules = append(rules, rule)
+			}
 		}
-	}
-	spec := istiov1alpha3.VirtualService{
-		Hosts: hosts.List(),
 	}
 
 	...
-}
-
-// 删除spec.http.match.authority，直接注释掉下面Authority赋值部分的代码
-func makeMatch(host string, pathRegExp string, gateways sets.String) *istiov1alpha3.HTTPMatchRequest {
-	match := &istiov1alpha3.HTTPMatchRequest{
-		Gateways: gateways.List(),
-		// remove default authority for didi serverless platform
-		//Authority: &istiov1alpha3.StringMatch{
-		//	// Do not use Regex as Istio 1.4 or later has 100 bytes limitation.
-		//	MatchType: &istiov1alpha3.StringMatch_Prefix{Prefix: hostPrefix(host)},
-		//},
-	}
-	// Empty pathRegExp is considered match all path. We only need to
-	// consider pathRegExp when it's non-empty.
-	if pathRegExp != "" {
-		match.Uri = &istiov1alpha3.StringMatch{
-			MatchType: &istiov1alpha3.StringMatch_Regex{Regex: pathRegExp},
-		}
-	}
-	return match
 }
 ```
 
@@ -167,5 +166,7 @@ func makeMatch(host string, pathRegExp string, gateways sets.String) *istiov1alp
 ### 总结
 
 问题是解决了，但是为什么通过webhook的方式不生效，现象看起来是没调用webhook，还需要再去看下k8s有关webhook调用的部分的代码，很可能又是一个知识盲区。
+
+knative中很多类型的属性并没有在上层暴露，导致无法直接使用ksvc进行管理，要么改源码，要么自己负责管理原本由ksvc统一管理的组件，虽然更加灵活，但是使用成本也更高，违背ksvc设计的初衷
 
 通过此次问题排查，学习到了knative整个流程、原理，理清了各组件的交互，对后续问题排查有很大的帮助
