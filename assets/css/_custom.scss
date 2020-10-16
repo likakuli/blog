@@ -1,0 +1,93 @@
+// ==============================
+// Custom style
+// 自定义样式
+// ==============================
+
+// ========== Theme Color ========== //
+// Config here to change theme color
+// Default | Mint Green | Cobalt Blue | Hot Pink | Dark Violet
+$theme-color-config: 'Default';
+
+// Default theme color map
+$theme-color-map: (
+  'Default': #c05b4d #f8f5ec,
+  'Mint Green': #16982B #f5f5f5,
+  'Cobalt Blue': #0047AB #f0f2f5,
+  'Hot Pink': #FF69B4 #f8f5f5,
+  'Dark Violet': #9932CC #f5f4fa
+);
+
+// Check theme color config.
+// if it does not exist, use default theme color.
+@if not(map-has-key($theme-color-map, $theme-color-config)) {
+  $theme-color-config: 'Default';
+}
+$theme-color-list: map-get($theme-color-map, $theme-color-config);
+
+// Default theme color of the site.
+$theme-color: nth($theme-color-list, 1) !default;
+
+// Deputy theme color of the site.
+$deputy-color: nth($theme-color-list, 2) !default;
+
+// ========== Color ========== //
+$black: #0a0a0a !default;
+$white: #fefefe !default;
+$light-gray: #e6e6e6 !default;
+$gray: #cacaca !default;
+$dark-gray: #8a8a8a !default;
+
+.post-reward {
+  margin-top: 20px;
+  padding-top: 10px;
+  text-align: center;
+  border-top: 1px dashed $light-gray;
+
+  .reward-button {
+    margin: 15px 0;
+    padding: 3px 7px;
+    display: inline-block;
+    color: $theme-color;
+    border: 1px solid $theme-color;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      color: $white;
+      background-color: $theme-color;
+      transition: 0.5s;
+    }
+  }
+
+  #reward:checked {
+    & ~ .qr-code {
+      display: block;
+    }
+
+    & ~ .reward-button {
+      display: none;
+    }
+  }
+
+  .qr-code {
+    display: none;
+
+    .qr-code-image {
+      display: inline-block;
+      min-width: 200px;
+      width: 40%;
+      margin-top: 15px;
+
+      span {
+        display: inline-block;
+        width: 100%;
+        margin: 8px 0;
+      }
+    }
+
+    .image {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}

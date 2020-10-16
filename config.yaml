@@ -1,0 +1,13 @@
+---
+baseurl: "/"
+DefaultContentLanguage: "zh-cn"
+hasCJKLanguage: true
+languageCode: "zh-cn"
+title: "kaku's blog"
+theme: "LoveIt"
+metaDataFormat: "yaml"
+algolia:
+  index: "likakuli.com"
+  key: "0059ae9418c944729d3c056aeda34e3a"
+  appID: "V5KLQ7KY3O"
+---
