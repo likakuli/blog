@@ -62,14 +62,16 @@ func makeIngressRule(domains []string, ns string, visibility netv1alpha1.Ingress
 		Hosts:      domains,
 		Visibility: visibility,
 		HTTP: &v1alpha1.HTTPIngressRuleValue{
-			Paths: []v1alpha1.HTTPIngressPath{{
+			Paths: []v1alpha1.HTTPIngressPath{
+                               {
 				Splits: splits,
 				// TODO(lichuqiang): #2201, plumbing to config timeout and retries.
         // 把tag name保存下来，传递给vs，用来区分是否需要设置header
 				AppendHeaders: map[string]string{
 					"RevisionName": name,
 				},
-			}},
+			},
+                    },
 		},
 	}
 }
