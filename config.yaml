@@ -1,5 +1,5 @@
 ---
-baseurl: "/"
+baseurl: "https://www.likakuli.com/"
 DefaultContentLanguage: "zh-cn"
 hasCJKLanguage: true
 languageCode: "zh-cn"
