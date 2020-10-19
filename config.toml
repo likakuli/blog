@@ -1,4 +1,4 @@
-baseURL = "https://likakuli.github.io"
+baseURL = "https://www.likakuli.com"
 # [en, zh-cn, fr, ...] 设置默认的语言
 defaultContentLanguage = "zh-cn"
 # 网站语言, 仅在这里 CN 大写
@@ -156,7 +156,7 @@ theme = "LoveIt"
     #  搜索结果中高亮部分的 HTML 标签
     highlightTag = "em"
     #  是否在搜索索引中使用基于 baseURL 的绝对路径
-    absoluteURL = true
+    absoluteURL = false
     [params.search.algolia]
       index = "likakuli.com"
       appID = "V5KLQ7KY3O"
@@ -609,7 +609,7 @@ theme = "LoveIt"
 # Permalinks 配置
 [Permalinks]
   # posts = ":year/:month/:filename"
-  posts = "/posts/:filename"
+  posts = ":filename"
 
 # 隐私信息配置
 [privacy]
