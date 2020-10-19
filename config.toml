@@ -156,7 +156,7 @@ theme = "LoveIt"
     #  搜索结果中高亮部分的 HTML 标签
     highlightTag = "em"
     #  是否在搜索索引中使用基于 baseURL 的绝对路径
-    absoluteURL = false
+    absoluteURL = true
     [params.search.algolia]
       index = "likakuli.com"
       appID = "V5KLQ7KY3O"
@@ -609,7 +609,12 @@ theme = "LoveIt"
 # Permalinks 配置
 [Permalinks]
   # posts = ":year/:month/:filename"
-  posts = ":filename"
+  posts = "/posts/:filename"
+
+# RelPermalinks 配置
+[RelPermalinks]
+  # posts = ":year/:month/:filename"
+  posts = "/posts/:filename"
 
 # 隐私信息配置
 [privacy]
