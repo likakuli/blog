@@ -99,7 +99,7 @@ func (l *gatewayPodTargetLister) ListProbeTargets(ctx context.Context, ing *v1al
 				newURL.Host = host + ":" + target.Port
 				var usn string
 				if ing.Annotations != nil {
-					usn = ing.Annotations["serverless.didichuxing.com/usn"]
+					usn = ing.Annotations["serverless.kakuchuxing.com/usn"]
 				}
 				newURL.Path = path.Join(newURL.Path, usn)
 				qualifiedTarget.URLs[i] = &newURL

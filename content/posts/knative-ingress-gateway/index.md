@@ -23,12 +23,12 @@ author: "Kaku Li"
 申请完域名后，分别通过域名和IP:PORT形式访问已部署的helloworld服务
 
 ```shell
-curl -v -H "Host: api-test.sls.intra.xiaojukeji.com" http://api-test.sls.intra.xiaojukeji.com/
+curl -v -H "Host: api-test.sls.intra.kaku.com" http://api-test.sls.intra.kaku.com/
 *   Trying 10.88.128.112...
 * TCP_NODELAY set
-* Connected to api-test.sls.intra.xiaojukeji.com (10.88.128.112) port 80 (#0)
+* Connected to api-test.sls.intra.kaku.com (10.88.128.112) port 80 (#0)
 > GET / HTTP/1.1
-> Host: api-test.sls.intra.xiaojukeji.com
+> Host: api-test.sls.intra.kaku.com
 > User-Agent: curl/7.54.0
 > Accept: */*
 >
@@ -38,15 +38,15 @@ curl -v -H "Host: api-test.sls.intra.xiaojukeji.com" http://api-test.sls.intra.x
 < Connection: keep-alive
 < server: istio-envoy
 <
-* Connection #0 to host api-test.sls.intra.xiaojukeji.com left intact
+* Connection #0 to host api-test.sls.intra.kaku.com left intact
 
 # 10.190.16.26 为 knative-ingress-gateway的容器IP
-curl -v -H "Host:api-test.sls.intra.xiaojukeji.com" http://10.190.16.26/
+curl -v -H "Host:api-test.sls.intra.kaku.com" http://10.190.16.26/
 *   Trying 10.190.16.26...
 * TCP_NODELAY set
 * Connected to 10.190.16.26 (10.190.16.26) port 80 (#0)
 > GET / HTTP/1.1
-> Host:api-test.sls.intra.xiaojukeji.com
+> Host:api-test.sls.intra.kaku.com
 > User-Agent: curl/7.54.0
 > Accept: */*
 >
@@ -141,7 +141,7 @@ func MakeIngressSpec(
 	...
 
 	// add custom external domains
-	customHostStr := r.Annotations["serverless.didichuxing.com/domains"]
+	customHostStr := r.Annotations["serverless.kakuchuxing.com/domains"]
 	sort.Sort(sort.Reverse(sort.StringSlice(names)))
 	if len(customHostStr) > 0 {
 		customHosts := strings.Split(customHostStr, ";")
