@@ -212,7 +212,3 @@ func (s *State) Wait(ctx context.Context, condition WaitCondition) <-chan StateS
 Kubelet为了保证最终一致性，发现宿主上还有不应该存在的容器就会一直不断的去尝试删除，每次删除都会调用docker stop的api，与dockerd建立一个uds连接，dockerd删除容器的时候会启动一个goroutine通过rpc形式调用containerd来删除容器并等待最终删除完毕才返回，等待的过程中会另起一个goroutine来获取结果，然而containerd在调用runc去真正执行删除的时候因为容器内D进程，无法删除容器，导致没有发出task exit信号，dockerd的两个相关的goroutine也就不会退出。整个过程不断重复，最终就导致fd、内存、goroutine一步步的泄露，系统逐渐走向不可用。
 
 回过头来想想，其实kubelet本身的处理都没有问题，kubelet是为了确保一致性，要去删除不应该存在的容器，直到容器被彻底删除，每次调用docker api都设置了timeout。dockerd的逻辑有待商榷，至少可以做一些改进，因为客户端请求时带了timeout，且dockerd后端在接收到task exit事件后是会去做container remove操作的，即使当前没有docker stop请求。所以可以考虑把最后传入context.Background()的Wait函数调用去掉，当前面带超时的Wait返回后直接退出就可以，这样就不会造成资源泄露了。
-
-
-
-更多精彩内容可关注微信订阅号：幼儿园小班工程师
