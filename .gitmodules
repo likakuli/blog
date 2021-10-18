@@ -2,3 +2,6 @@
 	path = public
 	url = https://github.com/likakuli/likakuli.github.io.git
 	branch = master
+[submodule "themes/LoveI"]
+	path = themes/LoveI
+	url = https://github.com/likakuli/LoveIt.git
