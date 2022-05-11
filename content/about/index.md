@@ -10,7 +10,7 @@ categories: []
 author: "Kaku Li"
 ---
 
-Hi，我是 **Kaku 李鹤**，目前就职于快手。幼儿园小班工程师，终身学习者。  
+Hi，我是 **Kaku 李鹤**，目前就职于Shopee。幼儿园小班工程师，终身学习者。  
 
 
 
