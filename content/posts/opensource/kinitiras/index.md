@@ -6,7 +6,7 @@ draft: false
 keywords: ["kubernetes", "admission webhook", "rule engine"]
 description: ""
 tags: ["kubernetes"]
-categories: ["项目介绍"]
+categories: ["开源项目介绍"]
 author: "Kaku Li"
 ---
 
