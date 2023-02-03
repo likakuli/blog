@@ -113,6 +113,14 @@ theme = "LoveIt"
     url = "/about/"
     title = ""
     weight = 4
+  [[menu.main]]
+    identifier = "projects"
+    pre = ""
+    post = ""
+    name = "项目"
+    url = "/projects/"
+    title = ""
+    weight = 5
 
 [params]
   #  LoveIt 主题版本
