@@ -1,7 +1,7 @@
 ---
 title: "high QPS for configmap GET requests in kube-apiserver - 3"
-date: 2023-08-25T16:02:05+08:00
-lastmod: 2023-08-25T16:02:05+08:00
+date: 2023-08-26T16:02:05+08:00
+lastmod: 2023-08-26T16:02:05+08:00
 draft: false
 keywords: ["high qps", "configmap", "kube-apiserver"]
 description: "high QPS for configmap GET requests in kube-apiserver - 3"
