@@ -1,7 +1,7 @@
 ---
 title: "你真的搞懂 Informer 了吗？"
-date: 2023-10-013T20:13:59+08:00
-lastmod: 2023-10-13T20:13:59+08:00
+date: 2023-10-14T00:13:59+08:00
+lastmod: 2023-10-14T00:13:59+08:00
 draft: false
 keywords: ["kubernetes", "informer"]
 description: ""
