@@ -121,6 +121,14 @@ theme = "LoveIt"
     url = "/projects/"
     title = ""
     weight = 5
+  [[menu.main]]
+    identifier = "friends"
+    pre = ""
+    post = ""
+    name = "友链"
+    url = "/friends/"
+    title = ""
+    weight = 6
 
 [params]
   #  LoveIt 主题版本
