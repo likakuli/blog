@@ -1,7 +1,7 @@
 ---
 title: "kubernetes 究竟有没有 LTS？"
-date: 2024-1-13T22:13:59+08:00
-lastmod: 2024-1-13T22:13:59+08:00
+date: 2024-01-13T23:10:49+08:00
+lastmod: 2024-01-13T23:10:49+08:00
 draft: false
 keywords: ["kubernetes", "LTS"]
 description: ""
