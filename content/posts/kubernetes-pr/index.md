@@ -10,7 +10,7 @@ categories: ["pull request"]
 author: "Kaku Li"
 ---
 
-前段时间在排查一个线上服务被限流的问题时，发下了一个k8s的bug，可以参考[这篇](http://likakuli.com/post/2019/08/21/apiserver_connectionrefused/)内容，后给社区提了一个pull request来修复这个问题，已经被采纳，随着1.16正式发布。这里来记录一下当时遇到的问题，避免后续再次不知所措。
+前段时间在排查一个线上服务被限流的问题时，发下了一个k8s的bug，可以参考[这篇](http://likakuli.net/post/2019/08/21/apiserver_connectionrefused/)内容，后给社区提了一个pull request来修复这个问题，已经被采纳，随着1.16正式发布。这里来记录一下当时遇到的问题，避免后续再次不知所措。
 
 ### 问题
 
