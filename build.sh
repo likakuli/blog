@@ -10,6 +10,10 @@ hugo # if using a theme, replace with `hugo -t <YOURTHEME>`
 
 # Go To Public folder
 cd public
+
+# Configure git http buffer for large files
+git config http.postBuffer 524288000
+
 # Add changes to git.
 git add .
 
@@ -18,7 +22,7 @@ msg="rebuilding site `date`"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
-git commit -m "$msg"
+git commit -m "$msg" || echo "No changes to commit"
 
 # Push source and build repos.
 git push origin master
